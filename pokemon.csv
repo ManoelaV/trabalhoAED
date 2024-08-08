@@ -33,10 +33,10 @@ id,Name,tipo1,tipo2,total,hp,ataque,defesa,ataque_especial,defesa_especial,veloc
 26,Raichu,Electric,ND,485,60,90,55,90,80,110,1,False
 27,Sandshrew,Ground,ND,300,50,75,85,20,30,40,1,False
 28,Sandslash,Ground,ND,450,75,100,110,45,55,65,1,False
-29,Nidoran♀,Poison,ND,275,55,47,52,40,40,41,1,False
+29,Nidoran Femea,Poison,ND,275,55,47,52,40,40,41,1,False
 30,Nidorina,Poison,ND,365,70,62,67,55,55,56,1,False
 31,Nidoqueen,Poison,Ground,505,90,92,87,75,85,76,1,False
-32,Nidoran♂,Poison,ND,273,46,57,40,40,40,50,1,False
+32,Nidoran Macho,Poison,ND,273,46,57,40,40,40,50,1,False
 33,Nidorino,Poison,ND,365,61,72,57,55,55,65,1,False
 34,Nidoking,Poison,Ground,505,81,102,77,85,75,85,1,False
 35,Clefairy,Fairy,ND,323,70,45,48,60,65,35,1,False
