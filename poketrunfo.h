@@ -45,7 +45,6 @@ typedef struct {
 
 TreeNode* insere_pokemon(TreeNode* raiz, Pokemon* p);
 TreeNode* cria_pokedex(int* tamanho);
-void imprime_pokedex(TreeNode* raiz);
 void armazena_pokemons(TreeNode* raiz, Pokemon* array, int* index);
 void imprime_carta(Pokemon* carta);
 Node* cria_no(Pokemon* carta);
@@ -55,6 +54,7 @@ void imprime_baralho(Baralho* baralho);
 Pokemon* buscarPorNome(TreeNode* root, const char* nome);
 Pilha* embaralha_cartas(Baralho* baralho);
 int compara_listas(Node* lista1, Node* lista2);
+Pilha** divide_baralho(Baralho* baralho, int* num_jogadores, int tamanho, TreeNode* pokedex);
 
 
 #endif

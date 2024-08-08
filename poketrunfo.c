@@ -21,7 +21,6 @@ TreeNode* inserir(TreeNode* root, Pokemon *pokemon) {
     return root;
 }
 
-
 // Função para criar a pokedex e enserir em uma arvore de busca binaria
 TreeNode* cria_pokedex(int* tamanho) {
     FILE* arquivo = fopen("pokemon.csv", "r");
@@ -93,18 +92,6 @@ TreeNode* cria_pokedex(int* tamanho) {
     *tamanho = count;
     return root;
 }
-//imprime a pokedex
-
-void imprime_pokedex(TreeNode* raiz) {
-    if (raiz == NULL) {
-        return;
-    }
-
-    imprime_pokedex(raiz->left);
-    imprime_carta(raiz->pokemon);
-    printf("\n");
-    imprime_pokedex(raiz->right);
-}
 
 // Função para armazenar os Pokémons da árvore binária em um array
 void armazena_pokemons(TreeNode* raiz, Pokemon* array, int* index) {
@@ -134,6 +121,7 @@ void imprime_carta(Pokemon* carta) {
     printf("Geracao: %d\n", carta->geracao);
     printf("Lendario: %s\n", carta->lendario); // Certifique-se de que este campo é um inteiro
 }
+
 //função que cria um nó
 Node* cria_no(Pokemon* carta) {
     Node* no = (Node*) malloc(sizeof(Node));
@@ -285,8 +273,57 @@ Pokemon* buscarPorNome(TreeNode* root, const char* nome) {
     return buscarPorNome(root->right, nome);
 }
 
-int main() {
+//função para dividir o baralho igualmente entre no maximo 3 jogadores, vai ser perguntada a quantidade de jogadores para poder inicializar o jogo
+//a função retorna um vetor de pilhas, onde cada pilha é um jogador
+Pilha** divide_baralho(Baralho* baralho, int* num_jogadores, int tamanho, TreeNode* pokedex) {
+    printf("Digite o numero de jogadores (1 a 3): ");
+    scanf("%d", num_jogadores);
+    if (*num_jogadores < 1 || *num_jogadores > 3) {
+        printf("Numero de jogadores invalido\n");
+        return NULL;
+    }
+    //cria o baralho e embaralha as cartas
+    baralho = cria_baralho(pokedex, tamanho);
+    Pilha* pilha = embaralha_cartas(baralho);
+    if (pilha == NULL) {
+        printf("Erro ao embaralhar as cartas\n");
+        return NULL;
+    }
+    Pilha** jogadores = (Pilha**) malloc(*num_jogadores * sizeof(Pilha*));
+    //cria uma pilha para cada jogador
+    for (int i = 0; i < *num_jogadores; i++) {
+        jogadores[i] = (Pilha*) malloc(sizeof(Pilha));
+        if (jogadores[i] == NULL) {
+            printf("Erro ao alocar memoria para o jogador %d\n", i + 1);
+            for (int j = 0; j < i; j++) {
+                free(jogadores[j]);
+            }
+            free(jogadores);
+            return NULL;
+        }
+        jogadores[i]->topo = NULL;
+        jogadores[i]->tamanho = 0;
+    }
 
+    //distribui as cartas entre os jogadores
+    Node* no = pilha->topo;
+    int jogador = 0;
+    while (no != NULL) {
+        Node* proximo = no->proximo;
+        no->proximo = jogadores[jogador]->topo;
+        jogadores[jogador]->topo = no;
+        jogadores[jogador]->tamanho++;
+        jogador = (jogador + 1) % *num_jogadores;
+        no = proximo;
+    }
+
+    free(pilha);
+    return jogadores;
+
+}
+
+
+int main() {
     int tamanho;
     int resposta;
     TreeNode* pokedex = cria_pokedex(&tamanho);
@@ -298,18 +335,15 @@ int main() {
 
     do {
         printf("Escolha uma opcao:\n");
-        printf("1 - Imprimir Pokedex\n");
-        printf("2 - Buscar Pokemon por nome\n");
-        printf("3 - Criar e imprimir um baralho\n");
-        printf("4 - Embaralhar cartas e imprimir pilha\n");
+        printf("1 - Buscar Pokemon por nome\n");
+        printf("2 - Criar e imprimir um baralho\n");
+        printf("3 - Embaralhar cartas e imprimir pilha\n");
+        printf("4 - Dividir baralho entre jogadores\n");
         printf("5 - Sair\n");
         scanf("%d", &resposta);
 
         switch (resposta) {
             case 1:
-                imprime_pokedex(pokedex);
-                break;
-            case 2:
                 printf("Digite o nome do Pokemon a ser buscado: ");
                 char nome[50];
                 scanf(" %[^\n]", nome);
@@ -321,14 +355,14 @@ int main() {
                     printf("Pokemon nao encontrado\n");
                 }
                 break;
-            case 3:{
+            case 2:{
                 Baralho* baralho = cria_baralho(pokedex, tamanho);
                 if (baralho != NULL) {
                     imprime_baralho(baralho);
                 }
             }
                 break;
-            case 4:{
+            case 3:{
                 Baralho* baralho2 = cria_baralho(pokedex, tamanho);
                 if (baralho2 != NULL) {
                     Pilha* pilha = embaralha_cartas(baralho2);
@@ -344,10 +378,30 @@ int main() {
                         }
                     }
                 }
+            }     
+                break;
+            case 4:{
+                int num_jogadores;
+                Baralho* Baralho3 = cria_baralho(pokedex, tamanho);
+                Pilha** jogadores = divide_baralho(Baralho3, &num_jogadores, tamanho, pokedex);
+                if (jogadores != NULL) {
+                    for (int i = 0; i < num_jogadores; i++) {
+                        printf("Jogador %d:\n", i + 1);
+                        Node* no = jogadores[i]->topo;
+                        int j = 1;
+                        while (no != NULL) {
+                            printf("Carta numero %d:\n", j);
+                            imprime_carta(&no->carta);
+                            printf("\n");
+                            no = no->proximo;
+                            j++;
+                        }
+                    }
+                }
             }
                 break;
             case 5:
-                printf("Saindo...\n");
+                 printf("Saindo...\n");
                 break;
             default:
                 printf("Opcao invalida\n");
@@ -355,8 +409,6 @@ int main() {
     } while (resposta != 5);
 
     return 0;
-
-
 }
 
 
