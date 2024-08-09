@@ -439,6 +439,7 @@ void compara_atributos(Baralho* baralho) {
             /*em caso de empate será retirada mais uma carta de cada jogador para novamente ser comparado oa atributos
             o vencedor após o empate ficará com as 4 cartas jogadas*/
             printf("Empate!\n\n");
+            printf("Em caso de empate sera retirada mais uma carta de cada jogador para novamente ser comparado oa atributos o vencedor após o empate ficará com as 4 cartas jogadas\n\n");
             Pokemon* carta_jogador_01_2 = remove_carta_inicio(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, &baralho->tamanho_jogador_01);
             Pokemon* carta_maquina_2 = remove_carta_inicio(&baralho->primeiro_maquina, &baralho->ultimo_maquina, &baralho->tamanho_maquina);
             if (carta_jogador_01_2 == NULL || carta_maquina_2 == NULL) {
