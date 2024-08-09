@@ -17,19 +17,19 @@ typedef struct {
     int geracao;
     char lendario[10];
 } Pokemon;
-
+//estrutura de árvore binária
 typedef struct TreeNode {
     Pokemon* pokemon;
     struct TreeNode* left;
     struct TreeNode* right;
 } TreeNode;
-
+//estrutura de nó representa uma lista duplamente encadeada
 typedef struct Node {
     Pokemon carta;
     struct Node* proximo;
     struct Node* anterior;
 } Node;
-
+//estrutura da fila do baralho
 typedef struct {
     Node* primeiro_jogador_01;
     Node* ultimo_jogador_01;
@@ -48,8 +48,10 @@ void imprime_carta(Pokemon* carta) ;
 Node* cria_no(Pokemon* carta);
 Baralho* cria_baralho(TreeNode* pokedex, int tamanho, int num_cartas) ;
 Pokemon* remove_carta_inicio(Node** primeiro, Node** ultimo, int* tamanho);
+void empate(Baralho* baralho, Pokemon* carta_jogador_01, Pokemon* carta_maquina);
 void compara_atributos(Baralho* baralho);
 void menu_inicial(TreeNode* pokedex, int tamanho);
+
 
 
 #endif
