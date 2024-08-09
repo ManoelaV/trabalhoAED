@@ -322,6 +322,76 @@ Pilha** divide_baralho(Baralho* baralho, int* num_jogadores, int tamanho, TreeNo
 
 }
 
+//função para comparar os atributos dos pokemons das cartas de cada jogador e decidir quem ganhou, a função retorna o indice do jogador vencedor
+int compara_atributos(Pokemon* carta1, Pokemon* carta2, int atributo, TreeNode* pokedex, int tamanho) {
+    //chama a função para criar o baralho e embaralhar as cartas
+    Baralho* baralho = cria_baralho(pokedex, tamanho);
+    Pilha* pilha = embaralha_cartas(baralho);
+    if (pilha == NULL) {
+        printf("Erro ao embaralhar as cartas\n");
+        return -1;
+    }
+    //distribui as cartas entre os jogadores
+    Pilha** jogadores = divide_baralho(baralho, &tamanho, tamanho, pokedex);
+    if (jogadores == NULL) {
+        printf("Erro ao dividir o baralho entre os jogadores\n");
+        return -1;
+    }
+    //define qual jogador vai começar a partida entre o jogador 1 ou 2
+    int jogador = 0;
+
+    //retira a carta do topo da pilha de cartas do jogador escolhido e a imprime
+    Node* carta = jogadores[jogador]->topo;
+
+
+
+    printf("Escolha qual atributo deseja comparar:\n");
+    printf("1 - HP\n");
+    printf("2 - Ataque\n");
+    printf("3 - Defesa\n");
+    printf("4 - Ataque Especial\n");
+    printf("5 - Defesa Especial\n");
+    printf("6 - Lendario(se caso for)\n");
+
+    switch (atributo) {
+        case 1:
+            return carta1->hp > carta2->hp ? 0 : 1;
+        case 2:
+            return carta1->ataque > carta2->ataque ? 0 : 1;
+        case 3:
+            return carta1->defesa > carta2->defesa ? 0 : 1;
+        case 4:
+            return carta1->ataque_especial > carta2->ataque_especial ? 0 : 1;
+        case 5:
+            return carta1->defesa_especial > carta2->defesa_especial ? 0 : 1;
+            //caso o pokemon seja lendario, ele ganha, mas se o outro pokemon tambem for lendario, tera que ser escolhido novamente um atributo para comparar
+        case 6:{
+            if (strcmp(carta1->lendario, "True") == 0 && strcmp(carta2->lendario, "False") == 0) {
+                return 0;
+            } else if (strcmp(carta1->lendario, "False") == 0 && strcmp(carta2->lendario, "True") == 0) {
+                return 1;
+            } else if (strcmp(carta1->lendario, "True") == 0 && strcmp(carta2->lendario, "True") == 0) {
+                    printf("Ambas as cartas são lendárias. Escolha outro atributo:\n");
+                    printf("1 - HP\n");
+                    printf("2 - Ataque\n");
+                    printf("3 - Defesa\n");
+                    printf("4 - Ataque Especial\n");
+                    printf("5 - Defesa Especial\n");
+                    scanf("%d", &atributo);
+            }else {
+                    return -1;
+                }
+                break;
+            default:
+                return -1;
+
+        }
+    }
+
+    
+}
+
+
 
 int main() {
     int tamanho;

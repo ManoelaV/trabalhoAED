@@ -343,7 +343,7 @@ void compara_atributos(Baralho* baralho) {
         printf("3. Defesa\n");
         printf("4. Ataque Especial\n");
         printf("5. Defesa Especial\n");
-        printf("6. Velocidade\n");
+        printf("6. Lendario\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &escolha);
 
@@ -374,8 +374,48 @@ void compara_atributos(Baralho* baralho) {
                 valor_maquina = carta_maquina->defesa_especial;
                 break;
             case 6:
-                valor_jogador_01 = carta_jogador_01->velocidade;
-                valor_maquina = carta_maquina->velocidade;
+                valor_jogador_01 = strcmp(carta_jogador_01->lendario, "True") == 0 ? 1 : 0;
+                valor_maquina = strcmp(carta_maquina->lendario, "True") == 0 ? 1 : 0;
+                //se as duas cartas forem lendarias, será necessario escolher um novo atributo para comparar
+                if (valor_jogador_01 == 1 && valor_maquina == 1){
+                    printf("Ambas as cartas são lendarias, escolha um novo atributo para comparar:\n");
+                    printf("1. HP\n");
+                    printf("2. Ataque\n");
+                    printf("3. Defesa\n");
+                    printf("4. Ataque Especial\n");
+                    printf("5. Defesa Especial\n");
+                    printf("Escolha uma opcao: ");
+                    scanf("%d", &escolha);
+                    switch (escolha) {
+                        case 1:
+                            valor_jogador_01 = carta_jogador_01->hp;
+                            valor_maquina = carta_maquina->hp;
+                            break;
+                        case 2:
+                            valor_jogador_01 = carta_jogador_01->ataque;
+                            valor_maquina = carta_maquina->ataque;
+                            break;
+                        case 3:
+                            valor_jogador_01 = carta_jogador_01->defesa;
+                            valor_maquina = carta_maquina->defesa;
+                            break;
+                        case 4:
+                            valor_jogador_01 = carta_jogador_01->ataque_especial;
+                            valor_maquina = carta_maquina->ataque_especial;
+                            break;
+                        case 5:
+                            valor_jogador_01 = carta_jogador_01->defesa_especial;
+                            valor_maquina = carta_maquina->defesa_especial;
+                            break;
+                        default:
+                            printf("Opcao invalida!\n");
+                            free(carta_jogador_01);
+                            free(carta_maquina);
+                            continue;
+                    }
+                }
+                
+                
                 break;
             default:
                 printf("Opcao invalida!\n");
@@ -396,9 +436,123 @@ void compara_atributos(Baralho* baralho) {
             adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_maquina, &baralho->tamanho_maquina);
             adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_jogador_01, &baralho->tamanho_maquina);
         } else {
+            /*em caso de empate será retirada mais uma carta de cada jogador para novamente ser comparado oa atributos
+            o vencedor após o empate ficará com as 4 cartas jogadas*/
             printf("Empate!\n\n");
-            adiciona_carta_fim(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, carta_jogador_01, &baralho->tamanho_jogador_01);
-            adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_maquina, &baralho->tamanho_maquina);
+            Pokemon* carta_jogador_01_2 = remove_carta_inicio(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, &baralho->tamanho_jogador_01);
+            Pokemon* carta_maquina_2 = remove_carta_inicio(&baralho->primeiro_maquina, &baralho->ultimo_maquina, &baralho->tamanho_maquina);
+            if (carta_jogador_01_2 == NULL || carta_maquina_2 == NULL) {
+               return;
+            }
+            printf("=========================\n\n");
+            printf("Carta do Jogador 01:\n");
+            imprime_carta(carta_jogador_01_2);
+
+            printf("Carta da Maquina:\n");
+            imprime_carta(carta_maquina_2);
+
+            printf("Escolha o atributo para comparar:\n");
+            printf("1. HP\n");
+            printf("2. Ataque\n");
+            printf("3. Defesa\n");
+            printf("4. Ataque Especial\n");
+            printf("5. Defesa Especial\n");
+            printf("6. Lendario\n");
+            printf("Escolha uma opcao: ");
+            scanf("%d", &escolha);
+
+            switch (escolha) {
+            case 1:
+                valor_jogador_01 = carta_jogador_01_2->hp;
+                valor_maquina = carta_maquina_2->hp;
+                break;
+            case 2:
+                valor_jogador_01 = carta_jogador_01_2->ataque;
+                valor_maquina = carta_maquina_2->ataque;
+                break;
+            case 3:
+                valor_jogador_01 = carta_jogador_01_2->defesa;
+                valor_maquina = carta_maquina_2->defesa;
+                break;
+            case 4:
+                valor_jogador_01 = carta_jogador_01_2->ataque_especial;
+                valor_maquina = carta_maquina_2->ataque_especial;
+                break;
+            case 5:
+                valor_jogador_01 = carta_jogador_01_2->defesa_especial;
+                valor_maquina = carta_maquina_2->defesa_especial;
+                break;
+            case 6:
+                valor_jogador_01 = strcmp(carta_jogador_01_2->lendario, "True") == 0 ? 1 : 0;
+                valor_maquina = strcmp(carta_maquina_2->lendario, "True") == 0 ? 1 : 0;
+                if (valor_jogador_01 == 1 && valor_maquina == 1){
+                    printf("Ambas as cartas são lendarias, escolha um novo atributo para comparar:\n");
+                    printf("1. HP\n");
+                    printf("2. Ataque\n");
+                    printf("3. Defesa\n");
+                    printf("4. Ataque Especial\n");
+                    printf("5. Defesa Especial\n");
+                    printf("Escolha uma opcao: ");
+                    scanf("%d", &escolha);
+
+                    switch (escolha){
+                    case 1:
+                        valor_jogador_01 = carta_jogador_01_2->hp;
+                        valor_maquina = carta_maquina_2->hp;
+                        break;
+                    case 2:
+                        valor_jogador_01 = carta_jogador_01_2->ataque;
+                        valor_maquina = carta_maquina_2->ataque;
+                        break;
+                    case 3:
+                        valor_jogador_01 = carta_jogador_01_2->defesa;
+                        valor_maquina = carta_maquina_2->defesa;
+                        break;
+                    case 4:
+                        valor_jogador_01 = carta_jogador_01_2->ataque_especial;
+                        valor_maquina = carta_maquina_2->ataque_especial;
+                        break;
+                    case 5:
+                        valor_jogador_01 = carta_jogador_01_2->defesa_especial;
+                        valor_maquina = carta_maquina_2->defesa_especial;
+                        break;
+                    
+                    default:
+                        printf("Opcao invalida!\n");
+                            free(carta_jogador_01);
+                            free(carta_maquina);
+                            continue;
+                    }
+                }
+                
+            
+            default:
+                printf("Opcao invalida!\n");
+                            free(carta_jogador_01);
+                            free(carta_maquina);
+                            continue;
+            }
+            printf("\nValor da carta do jogador_01 (%s): %d\n", carta_jogador_01_2->nome, valor_jogador_01);
+            printf("Valor da carta da Maquina (%s): %d\n\n", carta_maquina_2->nome, valor_maquina);
+            // Determina o vencedor, o vencedor ficara com todas as cartas jogadas
+            if (valor_jogador_01 > valor_maquina) {
+                printf("Jogador 01 venceu a rodada!\n\n");
+                //o jogador 01 ficara com as 4 cartas jogadas
+                adiciona_carta_fim(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, carta_jogador_01, &baralho->tamanho_jogador_01);
+                adiciona_carta_fim(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, carta_maquina, &baralho->tamanho_jogador_01);
+                adiciona_carta_fim(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, carta_jogador_01_2, &baralho->tamanho_jogador_01);
+                adiciona_carta_fim(&baralho->primeiro_jogador_01, &baralho->ultimo_jogador_01, carta_maquina_2, &baralho->tamanho_jogador_01);
+            }else if(valor_jogador_01 < valor_maquina){
+                printf("Maquina venceu a rodada!\n\n");
+                //a maquina ficara com as cartas jogadas
+                adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_maquina, &baralho->tamanho_maquina);
+                adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_jogador_01, &baralho->tamanho_maquina);
+                adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_maquina_2, &baralho->tamanho_maquina);
+                adiciona_carta_fim(&baralho->primeiro_maquina, &baralho->ultimo_maquina, carta_jogador_01_2, &baralho->tamanho_maquina);
+            }
+            
+
+
         }
 
         printf("Cartas restantes:\nJogador 01: %d\nMaquina: %d\n\n", baralho->tamanho_jogador_01, baralho->tamanho_maquina);
@@ -413,6 +567,7 @@ void compara_atributos(Baralho* baralho) {
         printf("Jogador 01 venceu o jogo!\n\n");
     }
 }
+
 
 // Função para exibir o menu inicial
 void menu_inicial(TreeNode* pokedex, int tamanho) {
@@ -469,9 +624,17 @@ void menu_inicial(TreeNode* pokedex, int tamanho) {
     } while (opcao != 0);
 }
 
-int main() {
-    int tamanho = 0;
+int main(){
+    int tamanho;
     TreeNode* pokedex = cria_pokedex(&tamanho);
+
+    if (pokedex == NULL || tamanho <= 0) {
+        printf("Erro ao criar a pokedex ou nenhum Pokemon encontrado\n");
+        return 1;
+    }
+
     menu_inicial(pokedex, tamanho);
+
     return 0;
 }
+
