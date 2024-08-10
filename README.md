@@ -1,0 +1,38 @@
+#Poketrunfo
+
+Descrição
+PokeTrunfo é um jogo de cartas inspirado no Super Trunfo, 
+onde os jogadores utilizam cartas de Pokémon para competir em uma série
+de rodadas. Cada carta de Pokémon tem atributos como HP, Ataque, Defesa, 
+entre outros, e o objetivo do jogo é comparar esses atributos para vencer as 
+rodadas e ficar com todas as cartas.
+
+Funcionalidades
+- Árvore Binária: Implementação de uma árvore binária para armazenar e buscar cartas de Pokémon.
+- Lista Encadeada: Implementação de uma lista encadeada para armazenar as cartas de Pokémon de cada jogador.
+- Fila: Utilizamos uma como metodo de armazenamento das cartas de cada jogador.
+- Arquivo CSV: Leitura de um arquivo CSV com informações sobre cartas de Pokémon.
+- Comparação de Atributos: Jogadores escolhem atributos para comparar as cartas durante as rodadas.
+- Rodadas: O jogo é composto por uma série de rodadas, onde os jogadores comparam atributos das cartas.
+- Resolução de Empates: Implementação de um sistema para resolver empates, 
+onde novas cartas são comparadas, até que um jogador vença a rodada.
+
+Estrutura do Projeto
+- Poketrunfo.c: Arquivo que contem as funções principais do jogo.
+- Poketrunfo.h: Arquivo que contem as declarações das funções e das estruturas do jogo.
+- Main.c: Arquivo que contem a função main do jogo.
+- Pokemons.csv: Arquivo CSV com informações sobre cartas de Pokémon usado para criação da pokedex.
+- Makefile: Arquivo para compilação do projeto.
+
+Como Executar
+- Para compilar o projeto, basta executar o comando make no terminal se for linux.
+- Para compilar no windows, precisa utilizar o comando mingw32-make.
+
+Requisitos
+- Sistema Operacional Linux ou Windows.
+- Compilador para C: GCC ou MinGW.
+- Arquivo CSV com informações sobre cartas de Pokémon.
+
+Autores
+- Manoela Viera de Moura
+- Fabricio Fiss Bartz
