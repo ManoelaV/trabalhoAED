@@ -611,7 +611,7 @@ void menu_inicial(TreeNode* pokedex, int tamanho) {
     } while (opcao != 0);
 }
 
-int main(){
+/*int main(){
     int tamanho;
     TreeNode* pokedex = cria_pokedex(&tamanho);
 
@@ -623,5 +623,6 @@ int main(){
     menu_inicial(pokedex, tamanho);
 
     return 0;
-}
+}*/
+
 
