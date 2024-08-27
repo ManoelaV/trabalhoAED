@@ -320,6 +320,7 @@ void empate(Baralho* baralho, Pokemon* carta_jogador_01, Pokemon* carta_maquina)
         printf("4. Ataque Especial\n");
         printf("5. Defesa Especial\n");
         printf("6. Lendario\n");
+        printf("7. Velocidade\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &escolha);
 
@@ -359,6 +360,7 @@ void empate(Baralho* baralho, Pokemon* carta_jogador_01, Pokemon* carta_maquina)
                 printf("3. Defesa\n");
                 printf("4. Ataque Especial\n");
                 printf("5. Defesa Especial\n");
+                printf("6. Velocidade\n");
                 printf("Escolha uma opcao: ");
                 scanf("%d", &escolha);
                 switch (escolha) {
@@ -382,6 +384,10 @@ void empate(Baralho* baralho, Pokemon* carta_jogador_01, Pokemon* carta_maquina)
                         valor_jogador_01 = carta_jogador_01_2->defesa_especial;
                         valor_maquina = carta_maquina_2->defesa_especial;
                         break;
+                    case 6:
+                        valor_jogador_01 = carta_jogador_01_2->velocidade;
+                        valor_maquina = carta_maquina_2->velocidade;
+                        break;
                     default:
                         printf("Opcao invalida!\n");
                         free(carta_jogador_01_2);
@@ -390,6 +396,11 @@ void empate(Baralho* baralho, Pokemon* carta_jogador_01, Pokemon* carta_maquina)
                 }
             }
             break;
+            case 7:
+            valor_jogador_01 = carta_jogador_01_2->velocidade;
+            valor_maquina = carta_maquina_2->velocidade;
+            break;
+
         default:
             printf("Opcao invalida!\n");
             free(carta_jogador_01_2);
@@ -448,6 +459,7 @@ void compara_atributos(Baralho* baralho) {
         printf("4. Ataque Especial\n");
         printf("5. Defesa Especial\n");
         printf("6. Lendario\n");
+        printf("7. Velocidade\n");
         printf("Escolha uma opcao: ");
         scanf("%d", &escolha);
 
@@ -488,6 +500,7 @@ void compara_atributos(Baralho* baralho) {
                     printf("3. Defesa\n");
                     printf("4. Ataque Especial\n");
                     printf("5. Defesa Especial\n");
+                    printf("6. Velocidade\n");
                     printf("Escolha uma opcao: ");
                     scanf("%d", &escolha);
                     switch (escolha) {
@@ -511,6 +524,10 @@ void compara_atributos(Baralho* baralho) {
                             valor_jogador_01 = carta_jogador_01->defesa_especial;
                             valor_maquina = carta_maquina->defesa_especial;
                             break;
+                        case 6:
+                            valor_jogador_01 = carta_jogador_01->velocidade;
+                            valor_maquina = carta_maquina->velocidade;
+                            break;
                         default:
                             printf("Opcao invalida!\n");
                             free(carta_jogador_01);
@@ -518,6 +535,10 @@ void compara_atributos(Baralho* baralho) {
                             continue;
                     }
                 }
+                break;
+            case 7:
+            valor_jogador_01 = carta_jogador_01->velocidade;
+            valor_maquina = carta_maquina->velocidade;
             break;
             default:
                 printf("Opcao invalida!\n");
@@ -541,7 +562,7 @@ void compara_atributos(Baralho* baralho) {
             /*em caso de empate será retirada mais uma carta de cada jogador para novamente ser comparado oa atributos
             o vencedor após o empate ficará com as 4 cartas jogadas*/
             printf("Empate!\n\n");
-            printf("Em caso de empate sera retirada mais uma carta de cada jogador para novamente ser comparado oa atributos o vencedor após o empate ficará com as 4 cartas jogadas\n\n");
+            printf("Em caso de empate sera retirada mais uma carta de cada jogador para novamente ser comparado os atributos o vencedor apos o empate ficara com as 4 cartas jogadas\n\n");
             empate(baralho, carta_jogador_01, carta_maquina);  
         }
 
@@ -611,7 +632,9 @@ void menu_inicial(TreeNode* pokedex, int tamanho) {
     } while (opcao != 0);
 }
 
-/*int main(){
+/*
+
+int main(){
     int tamanho;
     TreeNode* pokedex = cria_pokedex(&tamanho);
 
@@ -623,6 +646,8 @@ void menu_inicial(TreeNode* pokedex, int tamanho) {
     menu_inicial(pokedex, tamanho);
 
     return 0;
-}*/
+}
+
+*/
 
 
